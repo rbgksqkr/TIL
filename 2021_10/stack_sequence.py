@@ -1,29 +1,23 @@
-T = int(input())
+n = int(input())
+stack = []
+answer = []
+flag = 0
+cur = 1
+for i in range(n):
+    num = int(input())
+    while cur <= num:       
+        stack.append(cur)
+        answer.append("+")
+        cur += 1
 
-operators = ["+"]
-sequence = []
-numbers = [1]
-top = 1
+    if stack[-1] == num:    
+        stack.pop()         
+        answer.append("-")
+    else:                   
+        print("NO")        
+        flag = 1           
+        break               
 
-for i in range(T):
-  sequence.append(int(input()))
-
-i = 2
-
-while sequence and top != 0:
-  if numbers[-1] == sequence[0]:
-    numbers.pop(-1)
-    sequence.pop(0)
-    operators.append("-")
-    top -= 1
-  else:
-    numbers.append(i)
-    operators.append("+")
-    top += 1
-    i += 1
-
-if sequence:
-  print("NO")
-else:
-  for i in operators:
-    print(i)
+if flag == 0:
+    for i in answer:
+        print(i)
