@@ -8,4 +8,6 @@ for i in range(N):
   cor.append((a,b))
 
 cor.sort(key=lambda x:(x[1], x[0]))
-print(cor)
+
+for i in cor:
+  print(i[0], i[1])
