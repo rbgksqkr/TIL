@@ -1,21 +1,26 @@
 import sys
 input = sys.stdin.readline
 
+answer = 0
 G = int(input())
 P = int(input())
+parent = [i for i in range(G + 1)]
 planes = []
-gates = [0] * G
+
 for _ in range(P):
-  planes.append(int(input()))
+    planes.append(int(input()))
 
-for i in range(P):
-  flag = 0
-  for j in range(planes[i]-1, -1, -1):
-    if gates[j] == 0:
-      gates[j] = 1
-      flag = 1
-      break
-  if flag == 0:
-    break
+def find(x):
+    if parent[x] == x:
+        return x
+    parent[x] = find(parent[x])
+    return parent[x]
 
-print(sum(gates))
+
+for plane in planes:
+    docking = find(plane)
+    if docking == 0:
+        break
+    parent[docking] = parent[docking - 1]
+    answer += 1
+print(answer)
