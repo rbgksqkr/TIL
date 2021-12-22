@@ -3,11 +3,10 @@ input = sys.stdin.readline
 
 N = int(input())
 days = [0] * 1001
-score, idx = 0, 1
 task = []
 for _ in range(N):
-  a, b = map(int, input().split())
-  task.append((a,b))
+  day, score = map(int, input().split())
+  task.append((day,score))
 
 task.sort(key=lambda x:(-x[1], -x[0]))
 
