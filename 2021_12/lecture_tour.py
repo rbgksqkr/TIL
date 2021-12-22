@@ -1,20 +1,16 @@
-import sys
-
-input = sys.stdin.readline
+import heapq
 
 n = int(input())
-schedules = [0] * 10001
-lectures = []
-for _ in range(n):
-    pay, day = map(int, input().split())
-    lectures.append((pay, day))
-
-lectures.sort(key=lambda x: (-x[0], -x[1]))
-
+lst = []
 for i in range(n):
-  for j in range(lectures[i][1], 0, -1):
-    if schedules[j] == 0:
-      schedules[j] += lectures[i][0]
-      break
+    lst.append(list(map(int, input().split())))
 
-print(sum(schedules))
+lst.sort(key=lambda x: (x[1]))
+p_list = []
+
+for i in lst:
+    heapq.heappush(p_list, i[0])
+    if (len(p_list) > i[1]):
+        heapq.heappop(p_list)
+
+print(sum(p_list))
