@@ -2,6 +2,7 @@ import sys
 input = sys.stdin.readline
 N = int(input())
 arr = []
+visited = [0] * N
 for i in range(N):
   toStation, fillGas = map(int, input().split())
   arr.append((toStation, fillGas))
@@ -13,15 +14,16 @@ cur, count, idx = 0, 0, 0
 while idx < len(arr):
   if toTown - cur <= curGas:
     break
-  if arr[idx][0] - cur <= curGas:
+  if arr[idx][0] - cur <= curGas and visited[idx] == 0:
     count += 1
     curGas -= arr[idx][0] - cur
     curGas += arr[idx][1]    
     cur += arr[idx][0] - cur
     idx = 0
+    visited[idx] = 1
   else:
     idx += 1
-
+    
 if idx >= len(arr):
   print(-1)
 else:
