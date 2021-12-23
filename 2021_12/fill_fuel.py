@@ -2,30 +2,27 @@ import sys
 input = sys.stdin.readline
 N = int(input())
 arr = []
-cur = 0
-count = 1
 for i in range(N):
   toStation, fillGas = map(int, input().split())
   arr.append((toStation, fillGas))
 toTown, curGas = map(int, input().split())
 
-arr.sort(key=lambda x:(x[0], -x[1]))
-result = []
-maxGas = arr[0]
+arr.sort(key=lambda x:(-x[1], x[0]))
 
-for i in range(1,N):
-  if curGas >= arr[i][0] - cur:
-    if maxGas[1] < arr[i][1]:
-      maxGas = arr[i]
-  else:
-    toTown -= maxGas[0] - cur
-    curGas -= maxGas[0] - cur
-    curGas += maxGas[1]
-    cur += maxGas[0]
-    maxGas = arr[i]
+cur, count, idx = 0, 0, 0
+while idx < len(arr):
+  if toTown - cur <= curGas:
+    break
+  if arr[idx][0] - cur <= curGas:
     count += 1
+    curGas -= arr[idx][0] - cur
+    curGas += arr[idx][1]    
+    cur += arr[idx][0] - cur
+    idx = 0
+  else:
+    idx += 1
 
-if curGas - (maxGas[0] - cur) + maxGas[1] > toTown:
-  print(count)
-else:
+if idx >= len(arr):
   print(-1)
+else:
+  print(count)
