@@ -1,30 +1,30 @@
 import sys
+import heapq
+
 input = sys.stdin.readline
 N = int(input())
 arr = []
-visited = [0] * N
 for i in range(N):
-  toStation, fillGas = map(int, input().split())
-  arr.append((toStation, fillGas))
+    heapq.heappush(arr, list(map(int, input().split())))
 toTown, curGas = map(int, input().split())
 
-arr.sort(key=lambda x:(-x[1], x[0]))
+count = 0
+move = []
 
-cur, count, idx = 0, 0, 0
-while idx < len(arr):
-  if toTown - cur <= curGas:
+while curGas < toTown:
+  while arr and arr[0][0] <= curGas:
+    toStation, fillGas = heapq.heappop(arr)
+    heapq.heappush(move, [-fillGas, toStation])
+
+  if not move:
+    count = -1
     break
-  if arr[idx][0] - cur <= curGas and visited[idx] == 0:
-    count += 1
-    curGas -= arr[idx][0] - cur
-    curGas += arr[idx][1]    
-    cur += arr[idx][0] - cur 
-    visited[idx] = 1
-    idx = 0
-  else:
-    idx += 1
-    
-if idx >= len(arr):
-  print(-1)
-else:
+  
+  fg, ts = heapq.heappop(move)
+  curGas += -fg
+  count += 1
+
+if toTown <= curGas:
   print(count)
+else:
+  print(-1)
