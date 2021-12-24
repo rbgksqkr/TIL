@@ -18,9 +18,9 @@ while idx < len(arr):
     count += 1
     curGas -= arr[idx][0] - cur
     curGas += arr[idx][1]    
-    cur += arr[idx][0] - cur
-    idx = 0
+    cur += arr[idx][0] - cur 
     visited[idx] = 1
+    idx = 0
   else:
     idx += 1
     
