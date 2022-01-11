@@ -3,31 +3,24 @@ from collections import deque
 input = sys.stdin.readline
 
 N, K = map(int, input().split())
-queue = deque([N])
-graph = [0] * 100001
-graph[N] = 1
 
-def bfs():
-  while graph[K] == 0:
-    cur = queue.popleft()
-    if cur*2 < 100001:
-      if graph[cur*2]:
-        graph[cur*2] = min(graph[cur*2], graph[cur]+1)
-      else:
-        graph[cur*2] = graph[cur] + 1
-      queue.append(cur*2)
+graph = [0 for _ in range(100001)]
 
-    if graph[cur+1]:
-      graph[cur+1] = min(graph[cur+1], graph[cur]+1)  
-    else:
-      graph[cur+1] = graph[cur] + 1
-    queue.append(cur+1)
 
-    if graph[cur-1]:
-      graph[cur-1] = min(graph[cur-1], graph[cur]+1)
-    else:
-      graph[cur-1] = graph[cur] + 1
-    queue.append(cur-1) 
- 
-bfs()
-print(graph[K]-1)
+def bfs(x):
+  queue = deque([x])
+  while queue:
+    x = queue.popleft()
+    if x == K:
+      print(graph[x])
+      break
+
+    d = [x-1, x+1, 2*x]
+
+    for i in range(3):
+      dx = d[i]
+      if 0 <= dx <= 100000 and graph[dx] == 0:
+        graph[dx] = graph[x] + 1
+        queue.append(dx)
+
+bfs(N)
