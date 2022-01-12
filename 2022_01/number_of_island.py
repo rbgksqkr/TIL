@@ -2,6 +2,7 @@ import sys
 input = sys.stdin.readline
 sys.setrecursionlimit(100000)
 
+
 def dfs(x, y):
   dx = [-1, 1, 0, 0, -1, -1, 1, 1]
   dy = [0, 0, -1, 1, -1, 1, -1, 1]
@@ -15,6 +16,7 @@ def dfs(x, y):
       dfs(x+dx[i], y+dy[i])
     return True
 
+  
 while True:
   w, h = map(int, input().split())
   graph = []
