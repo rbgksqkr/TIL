@@ -28,6 +28,7 @@ def dfs(x, y):
       dfs(x+dx[i], y+dy[i])
     return True
 
+  
 answer = []
 count = 0
 for i in range(M):
@@ -35,7 +36,6 @@ for i in range(M):
     if dfs(i, j):
       answer.append(count)
       count = 0
-
 
 answer.sort()
 print(len(answer))
