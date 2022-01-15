@@ -7,6 +7,8 @@ graph = []
 visited = [[0 for _ in range(N)] for _ in range(N)]
 x, y = 0, 0
 fish = 0
+size = 2
+count = 0
 for i in range(N):
   temp = list(map(int, input().split()))
   for j in range(len(temp)):
@@ -16,47 +18,27 @@ for i in range(N):
       fish += 1
   graph.append(temp)
 
-print(graph, fish)
 
-def bfs(x, y):
-  queue = deque([[x, y]])
-  size = 2
-  count = 0
-  times = 0
-  
+def dfs(x, y, size):
+  global count
   global fish
-  if fish == 0:
-    print(times)
-    return
+  dx = [-1, 0, 1, 0]
+  dy = [0, -1, 0, 1]
 
-  mx = [-1, 0, 1, 0]
-  my = [0, -1, 0, 1]
+  if x < 0 or y < 0 or x >= N or y >= N:
+    return False
+  
+  if graph[x][y] <= size:
+    if graph[x][y] != 0 and graph[x][y] != size:
+      count += 1
+      fish -= 1
+      if size == count:
+        size += 1
+        count = 0
 
-  while queue:
-    x, y = queue.popleft()
     for i in range(4):
-      dx = x + mx[i]
-      dy = y + my[i]
-
-      if dx < 0 or dy < 0 or dx >= N or dy >= N:
-        continue
-
-      elif graph[dx][dy] <= size:
-        if graph[dx][dy] == 0 or graph[dx][dy] == size:
-          queue.append([dx, dy])
-        else:
-          count += 1
-          fish -= 1
-          if size == count:
-            size += 1
-            count = 0
-          queue.append([dx, dy])
-        visited[dx][dy] = visited[x][y] + 1
-        if fish == 0:
-          return
-
-    print(x, y, visited)
+      dfs(x+dx[i], y+dy[i], size)
+    return True
 
 
-bfs(x, y)
-print(visited)
+dfs(x, y, size)
