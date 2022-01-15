@@ -4,14 +4,13 @@ sys.setrecursionlimit(100000)
 
 M, N, K = map(int, input().split())
 graph = [[0 for _ in range(N)] for _ in range(M)]
-
 for _ in range(K):
   lbottom_x, lbottom_y, rtop_x, rtop_y = map(int, input().split())
   for i in range(M - rtop_y, M - lbottom_y):
     for j in range(lbottom_x, rtop_x):
       graph[i][j] = 1
 
-
+      
 def dfs(x, y):
   global count
 
