@@ -43,7 +43,7 @@ def bfs(x, y):
           if 0 < graph[dx][dy] < size:                            # 물고기를 찾았을 때
             min_dist = dist                                         # 그 물고기와의 거리를 최단거리로 하고
             fish_list.append([dx, dy, dist+1])                      # 물고기 위치와 거리를 fish_list에 삽입
-          if dist < min_dist:                                     # 물고기를 아직 못찾았을 때
+          if dist < min_dist:                                     # 다른 경로로 가서 물고기 찾기
             queue.append([dx, dy, dist+1])                          # 경로에 추가
 
   if fish_list:                                               # 모든 그래프를 돌고 나서 물고기가 있으면
