@@ -27,16 +27,13 @@ def bfs(x, y):
   sheep = 0
   mx = [-1, 1, 0, 0]
   my = [0, 0, -1, 1]
-
   while queue:
     x, y = queue.popleft()
     for i in range(4):
       dx = x + mx[i]
       dy = y + my[i]
-      
       if dx < 0 or dy < 0 or dx >= R or dy >= C or graph[dx][dy] == '#':
         continue
-
       if visited[dx][dy] == 0:
         visited[dx][dy] = 1
         if graph[dx][dy] == 'v':
