@@ -2,6 +2,7 @@ import sys
 import heapq
 input = sys.stdin.readline
 
+
 N = int(input())
 M = int(input())
 INF = int(1e9)
