@@ -11,10 +11,10 @@ def bfs():
   count = 0
   queue = set()
   queue.add((0, 0, graph[0][0]))
+  mx = [-1, 1, 0, 0]
+  my = [0, 0, -1, 1]  
   while queue:
     x, y, alpha = queue.pop()
-    mx = [-1, 1, 0, 0]
-    my = [0, 0, -1, 1]
     end = alpha
     for i in range(4):
       dx = x + mx[i]
