@@ -9,7 +9,7 @@ indegree = [0] * (V+1)
 for i in range(E):
   a, b = map(int, input().split())
   graph[a].append(b) # a -> b
-  indegree[b] += 1 # b의 진입차수 증가
+  indegree[b] += 1
 
 
 def topology_sort():
