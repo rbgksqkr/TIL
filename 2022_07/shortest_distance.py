@@ -1,7 +1,7 @@
 from collections import deque
 def solution(maps):
     n, m = len(maps), len(maps[0])
-    queue = deque([[0,0]])
+    queue = deque([[0,0]]) # 길찾기 문제는 BFS 활용
     dx = [-1, 1, 0, 0]
     dy = [0, 0, -1, 1]
     while queue:
