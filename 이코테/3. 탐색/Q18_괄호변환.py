@@ -1,46 +1,44 @@
-def balance_paren(p):
+def balanceParen(p):
     left = 0
     for i in range(len(p)):
-        if p[i] == "(":
+        if p[i] == '(':
             left += 1
         else:
             left -= 1
         
         if left == 0:
-            return i    
-        
-def proper_paren(u):
+            return i
+    return 0
+
+def properParen(p):
     left = 0
-    for i in range(len(u)):
-        if u[i] == '(':
+    for i in p:
+        if i == '(':
             left += 1
         else:
-            left -= 1       
-        
-        if left < 0:
-            return False
-        
-        if left == 0:
-            return True
-    return False
+            if left == 0:
+                return False
+            left -= 1
+    return True
         
 def solution(p):
-    result = ''
-    if p == '': # 1단계 : 빈 문자열
-        return result
-    idx = balance_paren(p) # 2단계 : 균형잡힌 문자열
+    answer = ''
+    if p == '':
+        return answer
+    idx = balanceParen(p)
     u, v = p[:idx+1], p[idx+1:]
-    if proper_paren(u): # 3단계 : 올바른 문자열
-        result = u + solution(v)
-    else: # 4단계 : 올바르지 않은 문자열
-        result += '('
-        result += solution(v)
-        result += ')'
-        temp = u[1:-1]
-        for i in temp:
-            if i == '(':
-                result += ')'
-            else:
-                result += '('
-    return result
+    if properParen(u):
+        answer += u + solution(v)
+    else:
+        answer += '('
+        answer += solution(v)
+        answer += ')'
         
+        u = u[1:-1]
+        
+        for i in u:
+            if i == '(':
+                answer += ')'
+            else:
+                answer += '('
+    return answer
