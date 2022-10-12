@@ -1,49 +1,63 @@
-# 바이러스 위치 저장방식을 이차원배열로 저장했더니 꺼낼때도 이중for문을 돌아야되서 시간초과가 났다.
-# 배열에 저장하는 방식에 따라 시간복잡도가 달라질 수 있다 !
-
-import sys
 from collections import deque
-input = sys.stdin.readline
-
-
-n, k = map(int, input().split())
+import copy
+from itertools import combinations
+n, m = map(int, input().split())
 
 maps = []
 virus = []
 for i in range(n):
-    temp = list(map(int, input().split()))
-    for j in range(n):
-        if temp[j] != 0:
-            virus.append((temp[j], 0, i, j))
-    maps.append(temp)
-
-target_s, target_x, target_y = map(int, input().split())
-
-virus.sort()
-
-queue = deque(virus)
-
-dx = [-1, 1, 0, 0]
-dy = [0, 0, -1, 1]
-
-while queue:
-    vi, s, x, y = queue.popleft()
-
-    if s == target_s: # 정해진 시간까지 돌리기
-        break
-
-    for i in range(4):
-        mx = x + dx[i]
-        my = y + dy[i]
-
-        if mx < 0 or my < 0 or mx >= n or my >= n:
-            continue
-
-        if maps[mx][my] == 0:
-            maps[mx][my] = vi
-            queue.append((vi, s+1, mx, my))
+    maps.append(list(map(int, input().split())))
+    for j in range(m):
+        if maps[i][j] == 2:
+            virus.append((i, j))
 
 
-print(maps[target_x-1][target_y-1])
+def makeWall():
+    spaces = []
+    for i in range(n):
+        for j in range(m):
+            if maps[i][j] == 0:
+                spaces.append((i, j))
 
-# s * k  * virus[i] * 4 = 1000 * 10000
+    max_count = 0
+    for space in list(combinations(spaces, 3)):
+        temp_map = copy.deepcopy(maps)
+        for x, y in space:
+            temp_map[x][y] = 1
+        spread(temp_map)
+        max_count = max(max_count, getScore(temp_map))
+        for x, y in space:
+            temp_map[x][y] = 0
+    print(max_count)
+
+
+def spread(temp_map):
+    dx = [-1, 1, 0, 0]
+    dy = [0, 0, -1, 1]
+
+    queue = deque(virus)
+    while queue:
+        x, y = queue.popleft()
+
+        for i in range(4):
+            mx = x + dx[i]
+            my = y + dy[i]
+
+            if mx < 0 or my < 0 or mx >= n or my >= m:
+                continue
+
+            if temp_map[mx][my] == 0:
+                temp_map[mx][my] = 2
+                queue.append((mx, my))
+
+
+def getScore(temp_map):
+    count = 0
+    for i in range(n):
+        for j in range(m):
+            if temp_map[i][j] == 0:
+                count += 1
+    return count
+
+
+makeWall()
