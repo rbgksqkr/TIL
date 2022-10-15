@@ -1,29 +1,31 @@
 from bisect import bisect_left, bisect_right
-def count_by_range(a, left_value, right_value):
-    left_index = bisect_left(a, left_value)
-    right_index = bisect_right(a, right_value)
-    return right_index - left_index
 
-array = [[] for _ in range((10001))]
-reversed_array = [[] for _ in range(10001)]
+def count_by_range(array, left_value, right_value):
+    left = bisect_left(array, left_value)
+    right = bisect_right(array, right_value)
+    return right - left
 
 def solution(words, queries):
-    answer = []
+    len_word = [[] for _ in range(10001)] # 가사 단어의 길이 별로 나누기
+    reversed_len_word = [[] for _ in range(10001)] # 정렬해야되서 ?가 앞에 나오는 경우 분리
+    answer = [0] * (len(queries))
     for word in words:
-        array[len(word)].append(word)
-        reversed_array[len(word)].append(word[::-1])
+        len_word[len(word)].append(word)
+        reversed_len_word[len(word)].append(word[::-1])
     
     for i in range(10001):
-        array[i].sort()
-        reversed_array[i].sort()
+        len_word[i].sort()
+        reversed_len_word[i].sort()
     
-    for query in queries:
-        if query[0] != '?':
-            res = count_by_range(array[len(query)], query.replace('?', 'a'), query.replace('?', 'z'))
+    # ex) fro??
+    # 연속된 ?를 변환
+    # froaa ~ frozz 사이에 있는 단어 개수 세기
+    for i in range(len(queries)):
+        if queries[i][0] != '?':
+            answer[i] = count_by_range(len_word[len(queries[i])], queries[i].replace('?', 'a'), queries[i].replace('?', 'z'))
         else:
-            res = count_by_range(reversed_array[len(query)], query[::-1].replace('?', 'a'), query[::-1].replace('?', 'z'))
-        answer.append(res)
+            answer[i] = count_by_range(reversed_len_word[len(queries[i])], queries[i][::-1].replace('?', 'a'), queries[i][::-1].replace('?', 'z'))
     return answer
-        
             
-        
+            
+
