@@ -1,6 +1,6 @@
 import sys
-from collections import deque
 input = sys.stdin.readline
+sys.setrecursionlimit(100000)
 
 n, m, k = map(int, input().split())
 graph = [[0 for _ in range(m)] for _ in range(n)]
@@ -16,36 +16,30 @@ dx = [-1, 1, 0, 0]
 dy = [0, 0, -1, 1]
 
 
-def bfs(x, y):
-    queue = deque([[x, y]])
-    visited[x][y] = 1
-    total = 1
-    while queue:
-        x, y = queue.popleft()
+def dfs(x, y):
+    global count
 
+    if x < 0 or y < 0 or x >= n or y >= m:
+        return False
+
+    elif graph[x][y] == 0:
+        graph[x][y] = 1
+        count += 1
         for i in range(4):
-            mx = x + dx[i]
-            my = y + dy[i]
-
-            if mx < 0 or my < 0 or mx >= n or my >= m:
-                continue
-
-            if graph[mx][my] == 0 and visited[mx][my] == 0:
-                visited[mx][my] = 1
-                total += 1
-                queue.append([mx, my])
-
-    return total
+            dfs(x+dx[i], y+dy[i])
+        return True
 
 
-visited = [[0 for _ in range(m)] for _ in range(n)]
-result = []
+answer = []
+count = 0
 for i in range(n):
     for j in range(m):
-        if graph[i][j] == 0 and visited[i][j] == 0:
-            result.append(bfs(i, j))
+        if dfs(i, j):
+            answer.append(count)
+            count = 0
 
-print(len(result))
-result.sort()
-for i in result:
+
+answer.sort()
+print(len(answer))
+for i in answer:
     print(i, end=' ')
