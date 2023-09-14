@@ -13,32 +13,26 @@ for _ in range(T):
   str_list = list(input().strip())
   n = len(str_list)
   flag = 0
-  for i in range(n//2):
-    if str_list[i] != str_list[n-i-1]:
-      flag = 2
-  
-  if flag == 0: # 회문
-    print(0)
-    continue
-  
+
   for i in range(n//2):
     start, end = i, n-i-1
     if str_list[start] != str_list[end]: # 양쪽이 다를 때
       # 왼쪽껄 버리고 팰린드롬 체크
       temp = str_list[:start] + str_list[start+1:]
       reversed_temp = temp[::-1]
-      # print('!:', temp, reversed_temp)
       if temp == reversed_temp:
-        print(1)
+        flag = 1
         break
       # 오른쪽껄 버리고 팰린드롬 체크
       temp = str_list[:end] + str_list[end+1:]
       reversed_temp = temp[::-1]
-      # print('@:', temp, reversed_temp)
       if temp == reversed_temp:
-        print(1)
+        flag = 1
         break
-
+      # 양쪽 다 버려봐도 안되면 그냥 문자열
       else:
-        print(2)
+        flag = 2
         break
+      
+  # 원래 팰린드롬이였으면 첫 if문에 안걸려서 그대로 0 출력    
+  print(flag)
