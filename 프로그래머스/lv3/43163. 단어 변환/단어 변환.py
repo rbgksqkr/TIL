@@ -23,6 +23,7 @@ def solution(begin, target, words):
                 continue
             # 방문 판단
             if not visited[i]:
+                print(start, words[i])
                 visited[i] = 1
                 count += 1
                 if dfs(words[i], target, visited):
