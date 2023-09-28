@@ -1,19 +1,15 @@
 count = 0
 
 def solution(begin, target, words):
-    answer = 0
     n = len(words)
-    print(words)
     words.sort()
-    print(words)
     if target not in words:
-        return answer
+        return 0
     
     visited = [0 for _ in range(n)]
     def dfs(start, target, visited):
         global count
         n = len(words)
-        print(visited, start, target)
         if start == target:
             return True
         for i in range(n):
@@ -27,7 +23,6 @@ def solution(begin, target, words):
                 continue
             # 방문 판단
             if not visited[i]:
-                print(start, words[i])
                 visited[i] = 1
                 count += 1
                 if dfs(words[i], target, visited):
