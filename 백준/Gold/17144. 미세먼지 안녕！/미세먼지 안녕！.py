@@ -1,6 +1,4 @@
 import sys
-import math
-from collections import deque
 input = sys.stdin.readline
 
 R, C, T = map(int, input().split())
@@ -61,53 +59,6 @@ def getSum(graph):
       if graph[i][j] != -1:
         mise_sum += graph[i][j]
   return mise_sum
-  
-
-# def moveVaccUp(coord):
-#   x, y, dir = coord[0], 1, 1
-#   while True:
-#     if x == coord[0] and y == 0:
-#       break
-
-#     mx = x + dx[dir]
-#     my = y + dy[dir]
-#     if mx < 0 or my < 0 or mx > coord[0] or my >= C:
-#       dir = (dir - 1) % 4
-#       continue
-
-#     graph[x][y], graph[mx][my] = graph[mx][my], graph[x][y]
-    
-#     # if graph[mx][my] and graph[mx][my] != -1:
-#     #   graph[x][y] = graph[mx][my]
-#     #   graph[mx][my] = 0
-#     x, y = mx, my
-
-# def moveVaccDown(coord):
-#   x, y, dir = coord[0], 1, 1
-  
-#   while True:
-#     if x == coord[0] and y == 0:
-#       break
-    
-#     mx = x + dx[dir]
-#     my = y + dy[dir]
-#     if mx < coord[0] or my < 0 or mx >= R or my >= C:
-#       dir = (dir + 1) % 4
-#       continue
-
-#     graph[x][y], graph[mx][my] = graph[mx][my], graph[x][y]
-#     x, y = mx, my
-
-
-
-# def printGraph(graph):
-#   print()
-#   row = len(graph)
-#   col = len(graph[0])
-#   for i in range(row):
-#     for j in range(col):
-#       print(graph[i][j], end=' ')
-#     print()
 
 
 def clean_top():
