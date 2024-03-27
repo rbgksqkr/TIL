@@ -1,5 +1,5 @@
-import sys
 from collections import deque
+import sys
 input = sys.stdin.readline
 
 n, m, v = map(int, input().split())
@@ -10,37 +10,32 @@ for _ in range(m):
     graph[a].append(b)
     graph[b].append(a)
 
-for i in graph:
-    i.sort()
+for i in range(1, n+1):
+    graph[i].sort()
 
-def bfs():
-    visited = [0 for _ in range(n+1)]
-    queue = deque([v])
-    visited[v] = 1
+
+def dfs(x):
+    visited[x] = 1
+    print(x, end=' ')
+    for i in graph[x]:
+        if not visited[i]:
+            dfs(i)
+
+
+def bfs(x):
+    queue = deque([x])
+    visited[x] = 1
     while queue:
         cur = queue.popleft()
         print(cur, end=' ')
-        for j in graph[cur]:
-            if visited[j]:
-                continue
-            queue.append(j)
-            visited[j] = 1
+        for i in graph[cur]:
+            if not visited[i]:
+                queue.append(i)
+                visited[i] = 1
 
-def dfs():
-    visited = [0 for _ in range(n+1)]
-    stack = []
-    stack.append(v)
-    while stack:
-        cur = stack.pop()
-        if visited[cur]:
-            continue
-        visited[cur] = 1
-        print(cur, end=' ')
-        for j in range(len(graph[cur])-1, -1, -1):
-            if visited[graph[cur][j]]:
-                continue
-            stack.append(graph[cur][j])
 
-dfs()
+visited = [0 for _ in range(n+1)]
+dfs(v)
 print()
-bfs()
+visited = [0 for _ in range(n+1)]
+bfs(v)
