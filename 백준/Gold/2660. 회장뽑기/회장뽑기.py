@@ -13,15 +13,12 @@ input = sys.stdin.readline
 
 n = int(input())
 INF = int(1e9)
-graph = [[] for _ in range(n+1)]
 dist = [[INF for _ in range(n+1)] for _ in range(n+1)]
 
 while True:
     u, v = map(int, input().split())
     if u == -1 and v == -1:
         break
-    graph[u].append(v)
-    graph[v].append(u)
     dist[u][v] = 1
     dist[v][u] = 1
 
