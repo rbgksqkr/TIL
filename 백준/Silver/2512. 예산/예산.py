@@ -24,17 +24,16 @@ start = 1  # 예산이 1 이상
 end = int(1e9)  # 100000 이 최댓값이 될수도 있으므로 100000으로 잡으면 위험
 requests.sort()
 
-if sum(requests) <= deposit: # 1. 모든 요청 배정 가능
+if sum(requests) <= deposit:  # 1. 모든 요청 배정 가능
     answer = requests[-1]
-else: # 2. '정수 상한액'을 계산
+else:  # 2. '정수 상한액'을 계산
     while start <= end:
         mid = (start + end) // 2
 
-        count, flag = 0, 0
+        count = 0
         for request in requests:
             if request > mid:
                 count += mid
-                flag = 1
             else:
                 count += request
 
