@@ -16,59 +16,71 @@
 # 4. k가 2라면, 곰팡이 중심으로 2만큼 떨어진 모든 격자를 채운다.
 # FIXME: 한 번 퍼지는 건 성공했는데, 2번째 돌 때의 무한루프
 
-from collections import deque
 import sys
-def input(): return sys.stdin.readline().rstrip()
+from collections import deque
+input = sys.stdin.readline
+n, m = map(int, input().split())
+
+board = [list(map(int, list(input().strip()))) for _ in range(n)]
 
 
-h, w = map(int, input().split())
-arr = [list(map(int, input())) for _ in range(h)]
-dire = [(1, 0), (0, 1), (-1, 0), (0, -1)]
-def inside(x, y): return 0 <= x < w and 0 <= y < h
+dx = [-1, 1, 0, 0]
+dy = [0, 0, -1, 1]
 
 
-def bfs(x, y):  # 곰팡이 덩어리 BFS
-    visit[y][x] = True
-    q = deque([(x, y)])
-    while q:
-        x, y = q.popleft()
-        for dx, dy in dire:
-            nx, ny = x+dx, y+dy
-            if inside(nx, ny) and not visit[ny][nx] and arr[ny][nx]:
-                visit[ny][nx] = True
-                q.append((nx, ny))
+def spread():  # 자기를 중심으로 +- k만큼 격자를 채운다
+    spread_board = [[0]*m for _ in range(n)]
+    for x in range(n):
+        for y in range(m):
+            speed = board[x][y]
+            spread_board[x][y] = max(spread_board[x][y], board[x][y])
+            if speed:
+                for i in range(x-speed, x+speed+1):
+                    for j in range(y-speed, y+speed+1):
+                        if i < 0 or i >= n or j < 0 or j >= m:
+                            continue
+
+                        if board[i][j] < board[x][y]:
+                            spread_board[i][j] = max(
+                                spread_board[i][j], board[x][y])
+    return spread_board
+
+
+def bfs(x, y):  # 곰팡이 덩어리 탐색 bfs
+    queue = deque([[x, y]])
+    visited[x][y] = 1
+
+    while queue:
+        x, y = queue.popleft()
+
+        for i in range(4):
+            mx = x + dx[i]
+            my = y + dy[i]
+
+            if mx < 0 or my < 0 or mx >= n or my >= m:
+                continue
+
+            if not visited[mx][my] and board[mx][my]:
+                visited[mx][my] = 1
+                queue.append([mx, my])
 
 
 def check():  # 곰팡이 덩어리 개수 세는 함수
-    cnt = 0
-    for i in range(h):
-        for j in range(w):
-            if arr[i][j] and not visit[i][j]:
-                bfs(j, i)
-                cnt += 1
-    return cnt
+    count = 0
+    for i in range(n):
+        for j in range(m):
+            if board[i][j] and not visited[i][j]:
+                bfs(i, j)
+                count += 1
+    return count
 
 
-def spread():
-    narr = [[0]*w for _ in range(h)]
-    for y in range(h):
-        for x in range(w):
-            speed = arr[y][x]
-            narr[y][x] = max(narr[y][x], arr[y][x])
-            if speed:
-                for nx in range(x-speed, x+speed+1):
-                    for ny in range(y-speed, y+speed+1):
-                        if inside(nx, ny) and arr[ny][nx] < arr[y][x]:
-                            narr[ny][nx] = max(narr[ny][nx], arr[y][x])
-    return narr
-
-
-day = 0
-visit = [[False]*w for _ in range(h)]
+answer = 0
+visited = [[0]*m for _ in range(n)]
 count = check()
 while count > 1:
-    visit = [[False]*w for _ in range(h)]
-    arr = spread()
+    visited = [[0]*m for _ in range(n)]
+    board = spread()
     count = check()
-    day += 1
-print(day)
+    answer += 1
+print(answer)
