@@ -2,20 +2,11 @@ import sys
 from collections import deque
 input = sys.stdin.readline
 
-# n = int(input())
-# home_x, home_y = map(int, input().split())
-# facilities = [int(input().split()) for _ in range(n)]
-# target_x, target_y = map(int, input().split())
-# # 두 좌표 사이의 거리는 x 좌표의 차이 + y 좌표의 차이
-# distance = abs(target_x - home_x) + abs(target_y - home_y)
-
-
 # 집 -> 타겟 사이의 거리 계산
 # 편의점 -> 타겟 사이의 거리 계산
 # 집 -> 타겟 사이의 거리 > 편의점 -> 타겟 사이의 거리 : 탐색
 #  집 -> 해당 타겟 사이의 거리가 1000 이하인지 계산
 # 1000 이하면 이동
-
 
 def bfs():
     visited = [0 for _ in range(n+1)]
