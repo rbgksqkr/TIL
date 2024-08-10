@@ -15,16 +15,17 @@ def bfs():
     while queue:
         x, y = queue.popleft()
 
+        # 집 -> 타겟 사이의 거리 계산 : 50 * 20 내에 갈 수 있으면 happy
         if abs(x-target_x) + abs(y-target_y) <= 1000:
             print('happy')
             return
 
-        for i in range(n):  # 편의점들 확인
-            if not visited[i]:  # 편의점을 방문하지 않았다면
-                new_x, new_y = facilities[i]  # 편의점의 좌표를 새로 뽑고
-                if abs(x-new_x) + abs(y-new_y) <= 1000:  # 다음거리까지 갈 수 있다면
-                    visited[i] = 1  # 방문체크해주고
-                    queue.append((new_x, new_y))  # 큐에 담아준다
+        for i in range(n):
+            if not visited[i]:
+                new_x, new_y = facilities[i]
+                if abs(x-new_x) + abs(y-new_y) <= 1000:  # 현재 위치에서 편의점까지 갈 수 있다
+                    visited[i] = 1
+                    queue.append([new_x, new_y])
     print('sad')
     return
 
