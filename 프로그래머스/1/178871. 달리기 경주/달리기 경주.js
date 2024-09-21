@@ -6,7 +6,6 @@
 // 2. callings에서 하나씩 꺼내 -1번째랑 value 변경
 
 function solution(players, callings) {
-    // { mumu: 1 ,  soe: 2 ,  poe: 3 ,  kai: 4 ,  mine: 5 }
     const mapper = {};
     
     players.forEach((player, idx) => {
@@ -14,12 +13,15 @@ function solution(players, callings) {
     });
     
     callings.forEach((calling, idx) => {
-        curRank = mapper[calling]
-        mapper[calling] -= 1
-        mapper[players[curRank-1]] += 1
-        let temp = players[curRank]
-        players[curRank] = players[curRank-1]
-        players[curRank-1] = temp
+        const curRank = mapper[calling];
+        const prevRank = curRank - 1;
+     
+        mapper[calling] = prevRank;
+        mapper[players[prevRank]] = curRank;
+        
+        [players[curRank], players[prevRank]] = [players[prevRank], players[curRank]];
+
+        
     })
     return players
 }
