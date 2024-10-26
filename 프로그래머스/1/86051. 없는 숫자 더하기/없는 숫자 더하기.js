@@ -3,9 +3,8 @@
 
 function solution(numbers) {
     var answer = 0;
-    const data = Array.from({length: 10}, (_, i) => i);
     
-    for(i of data){
+    for(let i =0; i <= 9; i++){
         if(!numbers.includes(i)){
             answer += i
         }
