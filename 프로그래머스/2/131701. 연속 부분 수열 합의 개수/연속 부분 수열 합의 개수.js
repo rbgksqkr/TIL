@@ -9,7 +9,6 @@ function solution(elements) {
     var answer = [];
     
     const data = [...elements, ...elements];
-    console.log(data);
     
     for (let i = 1; i <= elements.length; i++){
         for (let j = 0; j < elements.length; j++){
