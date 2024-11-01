@@ -26,25 +26,28 @@ function solution(maps) {
     visited[0][0] = 1;
     
     
-    while (queue.length > 0){
-        [x, y] = queue.shift();
-        
-        for (let i = 0; i < 4; i++){
-            mx = x + dx[i]
-            my = y + dy[i]
-            
-        
-            if (mx < 0 || my < 0 || mx >= n || my >= m){
-                continue;
-            }
-            
-        
-            if (!visited[mx][my] && maps[mx][my] == 1){
-                visited[mx][my] = visited[x][y] + 1
-                queue.push([mx, my])
+    let startIdx = 0
+
+    while (startIdx < queue.length){
+            [x, y] = queue[startIdx]
+            startIdx += 1
+
+            for (let i = 0; i < 4; i++){
+                mx = x + dx[i]
+                my = y + dy[i]
+
+
+                if (mx < 0 || my < 0 || mx >= n || my >= m){
+                    continue;
+                }
+
+
+                if (!visited[mx][my] && maps[mx][my] == 1){
+                    visited[mx][my] = visited[x][y] + 1
+                    queue.push([mx, my])
+                }
             }
         }
-    }
     
     
     return visited[n-1][m-1] == false ? -1 : visited[n-1][m-1];
