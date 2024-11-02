@@ -1,23 +1,22 @@
 function solution(n, computers) {
-    var answer = 0;
-    
-    const visited = [];
-    
-    for (let i = 0; i < computers.length; i++){
-        if(!visited[i]){ // 방문하지 않은 노드일 때
-            dfs(i, computers, visited); // dfs
-            answer += 1
-        }
-    }
-    return answer;
-}
+    let visited = [false];
+    let answer = 0;
 
-function dfs(node, computers, visited){
-    visited[node] = true;
-    
-    for(let i = 0; i < computers.length; i++){
-        if(!visited[i] && computers[node][i] == 1){
-            dfs(i, computers, visited)
+    function dfs(i) {
+        visited[i] = true; // 자기 자신 방문 처리
+        for(let j=0; j<computers[i].length; j++) {
+            if(computers[i][j]===1 && !visited[j]){ // i 에서 j 로 갈 수 있고 && 방문하지 않았음
+                dfs(j);
+            }
         }
     }
+    
+    for (let i=0; i < computers.length; i++) {
+        if (!visited[i]) { // 방문하지 않았음
+            dfs(i) // dfs 돌려
+            answer++; // 이어진만큼만 방문 체크
+        }
+    }
+    
+    return answer;
 }
