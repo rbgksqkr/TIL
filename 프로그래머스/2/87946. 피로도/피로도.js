@@ -1,51 +1,29 @@
 // [최소 필요 피로도, 소모 피로도]
-// TODO: 유저가 탐험할 수 있는 최대 던전 수(answer)
-// 1 <= k <= 5000. 던전 수 <= 8. 완전탐색 가능.
+// 수가 작음. 완전 탐색 가능.
+// TODO: 유저가 탐험할수 있는 최대 던전 수
 
-
+// 1. 내가 탐헐할 던전 순서를 정한다.
+// 2. 그 순서대로 돌았을 때 돌 수 있는 던전 수를 구한다.
+// 3. 던전 수가 최대가 되도록 max값을 구한다.
 
 function solution(k, dungeons) {
-    let n = dungeons.length;
-    let m = dungeons[0].length;
+    var answer = -1;
     
-    let data = [];
-    let visited = Array(dungeons.length).fill(false);
-    const curDungeons = pickDungeons(data, dungeons, visited, k);
+    let visited = Array(dungeons.lenth).fill(0);
     
-    
-    return result;
-}
-
-var result = 0;
-
-function solve(data, k){
-    let answer = 0;
-    for (let dungeon of data){
-        [required, minus] = dungeon;
-        if(k >= required){
-            k -= minus;
-            answer += 1;
+    function dfs(k, count){ // dfs(현재 피로도, 현재까지 돈 던전 수)
+        answer = Math.max(answer, count);
+        
+        for(let i = 0; i < dungeons.length; i++){
+            if(!visited[i] && k >= dungeons[i][0]){
+                visited[i] = 1;
+                dfs(k - dungeons[i][1], count + 1);
+                visited[i] = 0;
+            }
         }
     }
     
-    result = Math.max(result, answer);
-}
-
-function pickDungeons(data, dungeons, visited, k){
-    if (data.length == dungeons.length){
-        solve(data , k);
-        return;
-    }
+    dfs(k, 0);
     
-    for (let i = 0; i < dungeons.length; i++){
-        if(!visited[i]){
-            visited[i] = true;
-            data.push(dungeons[i]);
-            pickDungeons(data, dungeons, visited, k);
-            visited[i] = false;       
-            data.pop();
-        }
-    }
-    
+    return answer;
 }
-
