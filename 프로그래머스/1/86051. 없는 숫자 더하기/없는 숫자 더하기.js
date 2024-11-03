@@ -1,14 +1,6 @@
-// 0~9 정수 배열 numbers
-// 0~9 숫자 중 numbers 안에 없는 숫자의 합
+// TODO: numbers에서 찾을 수 없는 0부터 9까지의 숫자를 모두 찾아 더한 수
 
+// 0~9 까지 숫자 합 - numbers 숫자
 function solution(numbers) {
-    var answer = 0;
-    
-    for(let i =0; i <= 9; i++){
-        if(!numbers.includes(i)){
-            answer += i
-        }
-    }
-    
-    return answer;
+    return 45 - numbers.reduce((acc, cur) => acc + cur, 0);
 }
