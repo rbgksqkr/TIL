@@ -36,7 +36,7 @@ while queue:
 
         if not visited[mx]:
             visited[mx] = visited[x]
-            queue.append(mx)
+            queue.appendleft(mx)
 
     for i in [x-1, x+1]:
         mx = i
