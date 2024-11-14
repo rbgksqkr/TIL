@@ -13,7 +13,7 @@ x, y = map(int, input().split())
 
 # z = int((y / x) * 100)
 z = (100*y)//x
-start, end = 0, 1000000000
+start, end = 0, x
 answer = -1
 
 while start <= end:
