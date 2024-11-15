@@ -6,7 +6,9 @@
 
 # 1. 인접 리스트 형태로 간선들을 저장한다.
 # 2. 전선을 하나 끊는다.
-# 3. 끊은 그래프에서 두 그래프의 개수 차이를 계산한다.
+# 2-1. 전선에 연결된 송전탑 개수를 구한다.
+# 2-2. 전체(n)에서 전선에 연결된 송전탑 개수를 빼 전선에 연결되지 않은 개수를 구한다.
+# 3. 2-1과 2-2의 차로 전선을 끊었을 때 두 전력망의 송전탑 개수 차이를 계산한다.
 # 4. 두 그래프의 개수 차이가 최솟값을 구한다.
 from collections import deque
 
@@ -41,9 +43,17 @@ def solution(n, wires):
     for wire in wires:
         visited = [0 for _ in range(n+1)]
         a, b = wire
+        
+        # 2-1. 전선에 연결된 송전탑 개수를 구한다.
         res = check(a, b, visited, graph) # [a, b] 에 연결된 송전탑 개수
+        
+        # 2-2. 전체(n)에서 전선에 연결된 송전탑 개수를 빼 전선에 연결되지 않은 개수를 구한다.
         alpha = abs(n - res) # [a, b] 에 연결 안된 송전탑 개수 
-        result = abs(res - alpha) # 두 그래프의 개수 차이
-        answer = min(answer, result) # 두 그래프의 개수 차이의 최솟값을 구한다.
+        
+        # 3. 2-1과 2-2의 차로 전선을 끊었을 때 두 전력망의 송전탑 개수 차이를 계산한다.
+        result = abs(res - alpha)
+        
+        # 4. 두 그래프의 개수 차이가 최솟값을 구한다.
+        answer = min(answer, result)
     
     return answer
