@@ -18,7 +18,6 @@ count = [0] * 100001
 N, K = map(int, input().split())
 
 def bfs(x):
-    global answer,count
     queue = deque([x])
     graph[x] = 0
     count[x] = 1
